@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
 
-DATA_FILE = Path("Inventory-cli/data/inventory.json")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
+DATA_FILE = DATA_DIR / "inventory.json"
 
 
 def load_inventory():
@@ -13,9 +15,9 @@ def load_inventory():
     
     
 def save_inventory(inventory):
-    DATA_FILE.parent.mkdir(exist_ok=True)
-    
-    with open(DATA_FILE, "w") as file:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    with DATA_FILE.open("w", encoding="utf-8") as file:
         json.dump(inventory, file, indent=4)
         
 def add_product(product_id, name, price, quantity):
